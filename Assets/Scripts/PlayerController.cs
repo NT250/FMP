@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     float horizontalInput;
     float moveSpeed = 6.75f;
     bool isFacingRight = false;
-    float jumpPower = 8f;
+    float jumpPower = 9f;
     bool isJumping = false;
 
     Rigidbody2D rb;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
         FlipSprite();
 
-        if(Input.GetButtonDown("Jump") && !isJumping)
+        if(Input.GetKeyDown(KeyCode.UpArrow) && !isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             isJumping = true;
