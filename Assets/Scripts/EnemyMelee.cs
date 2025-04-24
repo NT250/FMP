@@ -9,15 +9,23 @@ public class EnemyMelee : MonoBehaviour
     public float jumpForce = 2f;
     public LayerMask groundLayer;
     public SpriteRenderer spriteRender;
-     
+    public float Hitpoints;
+    public float MaxHitpoints = 5;
+    public HealthBarBehaviour Healthbar;
+    
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool shouldJump;
 
+    public int damage = 3;
+
     // Start is called before the first frame update
     void Start()
     {
+        Hitpoints = MaxHitpoints;
+        Healthbar.SetHealth(Hitpoints, MaxHitpoints);
         rb = GetComponent<Rigidbody2D>();
+        player = GameObject.Find("Player").gameObject.transform;
     }
 
     // Update is called once per frame
@@ -70,6 +78,17 @@ public class EnemyMelee : MonoBehaviour
             Vector2 jumpDirection = direction * jumpForce;
 
             rb.AddForce(new Vector2(jumpDirection.x, jumpForce), ForceMode2D.Impulse);
+        }
+    }
+
+    public void TakeHit(float damage)
+    {
+        Hitpoints -= damage;
+        Healthbar.SetHealth(Hitpoints, MaxHitpoints);
+
+        if (Hitpoints <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -12,9 +12,14 @@ public class EnemyFlyingRanged : MonoBehaviour
     public GameObject bullet;
     public GameObject bulletParent;
     private Transform player;
+    public float Hitpoints;
+    public float MaxHitpoints = 5;
+    public HealthBarBehaviour Healthbar;
     // Start is called before the first frame update
     void Start()
     {
+        Hitpoints = MaxHitpoints;
+        Healthbar.SetHealth(Hitpoints, MaxHitpoints);
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -38,5 +43,16 @@ public class EnemyFlyingRanged : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, lineOfSight);
         Gizmos.DrawWireSphere(transform.position, shootingRange);
+    }
+
+    public void TakeHit(float damage)
+    {
+        Hitpoints -= damage;
+        Healthbar.SetHealth(Hitpoints, MaxHitpoints);
+
+        if (Hitpoints <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

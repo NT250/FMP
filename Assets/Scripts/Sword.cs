@@ -8,6 +8,11 @@ public class Sword : MonoBehaviour
     private Camera mainCam;
     private Rigidbody2D rb;
     public float force;
+    public float timeTillReturn;
+    public Transform player;
+    public int timesTouchedPlayer = 0;
+    public int damage = 3;
+    public EnemyMelee TakeHit;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +24,40 @@ public class Sword : MonoBehaviour
         rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rot + 90);
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        timeTillReturn = timeTillReturn - Time.deltaTime;
+        if (timeTillReturn <= 0)
+        {
+            transform.position = Vector2.MoveTowards(this.transform.position, player.position, force * Time.deltaTime);
+        }
+        if (timesTouchedPlayer >= 3)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            timeTillReturn = 0;
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            timesTouchedPlayer = timesTouchedPlayer + 1;
+        }
+        if (collision.gameObject.CompareTag("EnemyMelee"))
+        {
+            collision.gameObject.GetComponent<EnemyMelee>().TakeHit(damage);
+        }
+        if (collision.gameObject.CompareTag("EnemyFlying"))
+        {
+            collision.gameObject.GetComponent<EnemyFlyingRanged>().TakeHit(damage);
+        }
     }
 }
