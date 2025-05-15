@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 [System.Serializable]
 public class Wave
 {
@@ -27,11 +28,14 @@ public class WaveSpawner : MonoBehaviour
         SpawnWave();
         GameObject[] totalEnemyMelee = GameObject.FindGameObjectsWithTag("EnemyMelee");
         GameObject[] totalEnemyFlying = GameObject.FindGameObjectsWithTag("EnemyFlying");
-        if (totalEnemyMelee.Length == 0 && totalEnemyFlying.Length == 0 && !canSpawn && currentWaveNumber+1 != waves.Length)
+        GameObject[] totalEnemyRanged = GameObject.FindGameObjectsWithTag("EnemyRanged");
+        if (totalEnemyMelee.Length == 0 && totalEnemyFlying.Length == 0 && totalEnemyRanged.Length == 0 && !canSpawn && currentWaveNumber+1 != waves.Length)
         {
             currentWaveNumber++;
             canSpawn = true;
         }
+
+        NextLevel();
     }
 
     void SpawnWave()
@@ -47,6 +51,14 @@ public class WaveSpawner : MonoBehaviour
             {
                 canSpawn = false;
             }
+        }
+    }
+
+    void NextLevel()
+    {
+        if (currentWave.noOfEnemies == 0 && currentWaveNumber == 5)
+        {
+            SceneManager.LoadSceneAsync(2);
         }
     }
 }

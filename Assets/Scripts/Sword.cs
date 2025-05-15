@@ -59,5 +59,9 @@ public class Sword : MonoBehaviour
         {
             collision.gameObject.GetComponent<EnemyFlyingRanged>().TakeHit(damage);
         }
+        if (collision.gameObject.CompareTag("EnemyRanged"))
+        {
+            collision.gameObject.GetComponent<RangedEnemy>().TakeHit(damage);
+        }
     }
 }

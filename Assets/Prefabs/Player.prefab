@@ -216,7 +216,7 @@ MonoBehaviour:
   Sword: {fileID: 2049533734330979444, guid: 5a74c52dbee25e141bedfba21aac4a98, type: 3}
   SwordTransform: {fileID: 868040116738455004}
   canFire: 1
-  timeBetweenFiring: 1
+  timeBetweenFiring: 2
 --- !u!1 &6549810724368620698
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,5 +449,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e4bbf17da2e484090bdf79bfc0583d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 45
   heartUI: {fileID: 0}

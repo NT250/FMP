@@ -8,6 +8,7 @@ TagManager:
   - Sword
   - EnemyMelee
   - EnemyFlying
+  - EnemyRanged
   layers:
   - Default
   - TransparentFX
